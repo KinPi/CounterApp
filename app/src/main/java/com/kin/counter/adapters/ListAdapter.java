@@ -46,10 +46,17 @@ public class ListAdapter extends RecyclerView.Adapter {
         public void bindView (final int position) {
             mItemNameTextView.setText(CounterListActivity.counterList.get(position).name);
             mItemCountTextView.setText(CounterListActivity.counterList.get(position).count + "");
+
+            final int stepValue = CounterListActivity.counterList.get(position).step;
+            if (stepValue != 1) {
+                mPlusButton.setText("+" + stepValue);
+                mMinusButton.setText("-" + stepValue);
+            }
+
             mPlusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CounterListActivity.counterList.get(position).count++;
+                    CounterListActivity.counterList.get(position).count += stepValue;
                     CounterListActivity.db.update(CounterListActivity.counterList.get(position));
                     mItemCountTextView.setText(CounterListActivity.counterList.get(position).count + "");
                 }
@@ -58,8 +65,9 @@ public class ListAdapter extends RecyclerView.Adapter {
 
                 @Override
                 public void onClick(View v) {
-                    if (CounterListActivity.counterList.get(position).count > 0) {
-                        CounterListActivity.counterList.get(position).count--;
+                    int newValue = CounterListActivity.counterList.get(position).count - stepValue;
+                    if (newValue >= 0) {
+                        CounterListActivity.counterList.get(position).count = newValue;
                         CounterListActivity.db.update(CounterListActivity.counterList.get(position));
                         mItemCountTextView.setText(CounterListActivity.counterList.get(position).count + "");
                     }

@@ -21,6 +21,7 @@ public class CounterListActivity extends AppCompatActivity {
     public static List<Counter> counterList;
     public static DatabaseHelper db;
     private ListAdapter listAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class CounterListActivity extends AppCompatActivity {
         db = DatabaseHelper.getDatabaseHelper(getApplicationContext());
         counterList = db.queryForAllCounters();
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listRecyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.listRecyclerView);
         listAdapter = new ListAdapter();
         recyclerView.setAdapter(listAdapter);
 
@@ -53,9 +54,6 @@ public class CounterListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.plusOneListItem:
-//                db.add(new Counter("Test", 5));
-//                counterList = db.queryForAllCounters();
-//                listAdapter.notifyDataSetChanged();
                 Intent intent = new Intent(this, NewCounterItemActivity.class);
                 startActivityForResult(intent, NEW_COUNTER_ITEM_REQUEST);
                 break;
@@ -71,6 +69,10 @@ public class CounterListActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 counterList = db.queryForAllCounters();
                 listAdapter.notifyDataSetChanged();
+                long id = data.getLongExtra("Id", -1);
+                if (id != -1) {
+                    recyclerView.scrollToPosition(((int) id) - 1);
+                }
             }
         }
     }

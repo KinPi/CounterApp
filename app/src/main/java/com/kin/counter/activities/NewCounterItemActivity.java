@@ -1,5 +1,6 @@
 package com.kin.counter.activities;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,7 +35,8 @@ public class NewCounterItemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (newCounterItemNameEditText.getText().length() == 0 ||
                         newCounterItemCountEditText.getText().length() == 0 ||
-                        newCounterItemStepEditText.getText().length() == 0) {
+                        newCounterItemStepEditText.getText().length() == 0 ||
+                        Integer.parseInt(newCounterItemStepEditText.getText().toString()) <= 0) {
                     return;
                 }
 
@@ -43,11 +45,14 @@ public class NewCounterItemActivity extends AppCompatActivity {
                     int count = Integer.parseInt(newCounterItemCountEditText.getText().toString());
                     int step = Integer.parseInt(newCounterItemStepEditText.getText().toString());
 
-                    Counter counter = new Counter(name, count);
+                    Counter counter = new Counter(name, count, step);
                     DatabaseHelper db = DatabaseHelper.getDatabaseHelper(getApplicationContext());
                     long result = db.add(counter);
+                    Intent intent = new Intent();
+                    intent.putExtra("Id", result);
+
                     if (result >= 1) {
-                        setResult(RESULT_OK);
+                        setResult(RESULT_OK, intent);
                     }
                     else {
                         setResult(RESULT_CANCELED);

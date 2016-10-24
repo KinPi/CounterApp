@@ -33,6 +33,7 @@ public class DatabaseHelper {
         public static final String NAME = "name";
         public static final String ID = "id";
         public static final String COUNT = "count";
+        public static final String STEP = "step";
         public static final String TABLE = "counter";
 
         public MySQLiteOpenHelper(Context context) {
@@ -41,12 +42,12 @@ public class DatabaseHelper {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE counter (id INTEGER PRIMARY KEY, name TEXT, count INTEGER);");
+            db.execSQL("CREATE TABLE counter (id INTEGER PRIMARY KEY, name TEXT, count INTEGER, step INTEGER);");
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            throw new RuntimeException("How did this happen?");
+            throw new RuntimeException("No upgrade!");
         }
 
     }
@@ -60,8 +61,9 @@ public class DatabaseHelper {
             int id = result.getInt(0);
             String name = result.getString(1);
             int count = result.getInt(2);
+            int step = result.getInt(3);
             Log.d("DB: ", "id: " + id + "   Name: " + name + "     Steps: " + count);
-            counterList.add(new Counter(id, name, count));
+            counterList.add(new Counter(id, name, count, step));
         }
         result.close();
         db.close();
@@ -74,6 +76,7 @@ public class DatabaseHelper {
         ContentValues cv = new ContentValues();
         cv.put(mMySQLiteOpenHelper.NAME, counter.name);
         cv.put(mMySQLiteOpenHelper.COUNT, counter.count);
+        cv.put(mMySQLiteOpenHelper.STEP, counter.step);
         int rowsAffected = db.update(mMySQLiteOpenHelper.TABLE, cv, "id = " + counter.id ,null);
         db.close();
         return rowsAffected;
@@ -87,6 +90,7 @@ public class DatabaseHelper {
         ContentValues cv = new ContentValues();
         cv.put(mMySQLiteOpenHelper.NAME, counter.name);
         cv.put(mMySQLiteOpenHelper.COUNT, counter.count);
+        cv.put(mMySQLiteOpenHelper.STEP, counter.step);
         long id = db.insert(MySQLiteOpenHelper.TABLE, null, cv);
         db.close();
         return id;
