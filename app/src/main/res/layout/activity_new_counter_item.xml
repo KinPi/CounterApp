@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_new_counter_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.kin.counter.activities.NewCounterItemActivity">
+
+
+    <TextView
+        android:text="Name"
+        android:textSize="28sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:id="@+id/newCounterItemNameTextView"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:inputType="textPersonName"
+        android:text=""
+        android:hint="Enter the name of your item here."
+        android:layout_below="@+id/newCounterItemNameTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:id="@+id/newCounterItemNameTextEdit"/>
+
+    <TextView
+        android:text="Count"
+        android:textSize="28sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newCounterItemNameTextEdit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:id="@+id/newCounterItemCountTextView"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="28sp"
+        android:inputType="number"
+        android:text="0"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/newCounterItemCountTextView"
+        android:layout_marginTop="12dp"
+        android:id="@+id/newCounterItemCountTextEdit"/>
+
+
+    <TextView
+        android:text="Step"
+        android:textSize="28sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newCounterItemCountTextEdit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:id="@+id/newCounterItemStepTextView"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="28sp"
+        android:inputType="number"
+        android:text="1"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/newCounterItemStepTextView"
+        android:layout_marginTop="12dp"
+        android:id="@+id/newCounterItemStepEditText"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:text="Save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/newCounterItemSaveButton"/>
+
+        <Button
+            android:text="Cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/newCounterItemCancelButton"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

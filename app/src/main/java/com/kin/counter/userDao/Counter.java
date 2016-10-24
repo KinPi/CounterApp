@@ -5,6 +5,10 @@ public class Counter {
     public String name;
     public int count;
 
+    public Counter (String name, int count) {
+        this(-1, name, count);
+    }
+
     public Counter (int id, String name, int count) {
         this.id = id;
         this.name = name;

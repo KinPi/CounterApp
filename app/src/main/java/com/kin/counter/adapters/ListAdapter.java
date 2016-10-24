@@ -12,12 +12,9 @@ import com.kin.counter.R;
 import com.kin.counter.activities.CounterListActivity;
 
 public class ListAdapter extends RecyclerView.Adapter {
-    static int count = 0;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        count++;
-        Log.d("Count", "Count: " + count);
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent,false);
         return new ListViewHolder(view);
     }

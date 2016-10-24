@@ -42,69 +42,6 @@ public class DatabaseHelper {
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE counter (id INTEGER PRIMARY KEY, name TEXT, count INTEGER);");
-
-            ContentValues cv = new ContentValues();
-
-            cv.put(NAME, "Burps");
-            cv.put(COUNT, 10);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Kisses");
-            cv.put(COUNT, 1);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Jumps");
-            cv.put(COUNT, 15);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Burps");
-            cv.put(COUNT, 10);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Kisses");
-            cv.put(COUNT, 1);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Jumps");
-            cv.put(COUNT, 15);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Burps");
-            cv.put(COUNT, 10);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Kisses");
-            cv.put(COUNT, 1);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Jumps");
-            cv.put(COUNT, 15);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Burps");
-            cv.put(COUNT, 10);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Kisses");
-            cv.put(COUNT, 1);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Jumps");
-            cv.put(COUNT, 15);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Burps");
-            cv.put(COUNT, 10);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Kisses");
-            cv.put(COUNT, 1);
-            db.insert(TABLE, NAME, cv);
-
-            cv.put(NAME, "Jumps");
-            cv.put(COUNT, 15);
-            db.insert(TABLE, NAME, cv);
-
         }
 
         @Override
@@ -114,19 +51,20 @@ public class DatabaseHelper {
 
     }
 
-    public List<Counter> queryForCounters () {
+    public List<Counter> queryForAllCounters() {
         SQLiteDatabase db = mMySQLiteOpenHelper.getReadableDatabase();
         Cursor result = db.query(mMySQLiteOpenHelper.TABLE, null, null, null, null, null, mMySQLiteOpenHelper.ID);
         List<Counter> counterList = new ArrayList<>(20);
 
         while (result.moveToNext()) {
             int id = result.getInt(0);
-            String name =result.getString(1);
-            int steps =result.getInt(2);
-            Log.d("DB: ", "id: " + id + "   Name: " + name + "     Steps: " + steps);
-            counterList.add(new Counter(id, name, steps));
+            String name = result.getString(1);
+            int count = result.getInt(2);
+            Log.d("DB: ", "id: " + id + "   Name: " + name + "     Steps: " + count);
+            counterList.add(new Counter(id, name, count));
         }
         result.close();
+        db.close();
 
         return counterList;
     }
@@ -136,6 +74,21 @@ public class DatabaseHelper {
         ContentValues cv = new ContentValues();
         cv.put(mMySQLiteOpenHelper.NAME, counter.name);
         cv.put(mMySQLiteOpenHelper.COUNT, counter.count);
-        return db.update(mMySQLiteOpenHelper.TABLE, cv, "id = " + counter.id ,null);
+        int rowsAffected = db.update(mMySQLiteOpenHelper.TABLE, cv, "id = " + counter.id ,null);
+        db.close();
+        return rowsAffected;
+    }
+
+    public long add (Counter counter) {
+        SQLiteDatabase db = mMySQLiteOpenHelper.getWritableDatabase();
+        if (db == null) {
+            return 0;
+        }
+        ContentValues cv = new ContentValues();
+        cv.put(mMySQLiteOpenHelper.NAME, counter.name);
+        cv.put(mMySQLiteOpenHelper.COUNT, counter.count);
+        long id = db.insert(MySQLiteOpenHelper.TABLE, null, cv);
+        db.close();
+        return id;
     }
 }
