@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Counter</string>
-    <string name="plusOneListItem">PlusOne</string>
+    <string name="plusOneActionItem">Add</string>
+    <string name="searchActionItem">Search</string>
 </resources>

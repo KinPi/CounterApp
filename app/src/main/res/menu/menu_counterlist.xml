@@ -3,8 +3,14 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/plusOneListItem"
+        android:id="@+id/searchActionItem"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/searchActionItem"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/plusOneActionItem"
         android:icon="@drawable/ic_plus_one_white_24dp"
-        android:title="@string/plusOneListItem"
+        android:title="@string/plusOneActionItem"
         app:showAsAction="always"/>
 </menu>

@@ -1,12 +1,12 @@
 package com.kin.counter.activities;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.kin.counter.R;
 import com.kin.counter.database.DatabaseHelper;
@@ -33,11 +33,20 @@ public class NewCounterItemActivity extends AppCompatActivity {
         newCounterItemSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (newCounterItemNameEditText.getText().length() == 0 ||
-                        newCounterItemCountEditText.getText().length() == 0 ||
-                        newCounterItemStepEditText.getText().length() == 0 ||
-                        Integer.parseInt(newCounterItemStepEditText.getText().toString()) <= 0) {
-                    return;
+                if (newCounterItemNameEditText.getText().length() == 0) {
+                    Toast.makeText(NewCounterItemActivity.this, "Please enter a name!", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (newCounterItemCountEditText.getText().length() == 0) {
+                    Toast.makeText(NewCounterItemActivity.this, "Please enter a count value!", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (newCounterItemStepEditText.getText().length() == 0) {
+                    Toast.makeText(NewCounterItemActivity.this, "Please enter a step value!", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (Integer.parseInt(newCounterItemStepEditText.getText().toString()) <= 0) {
+                    Toast.makeText(NewCounterItemActivity.this, "Please enter a positive integer for step!", Toast.LENGTH_SHORT).show();
                 }
 
                 else {

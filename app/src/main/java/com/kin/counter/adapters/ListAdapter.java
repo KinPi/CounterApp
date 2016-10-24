@@ -48,7 +48,11 @@ public class ListAdapter extends RecyclerView.Adapter {
             mItemCountTextView.setText(CounterListActivity.counterList.get(position).count + "");
 
             final int stepValue = CounterListActivity.counterList.get(position).step;
-            if (stepValue != 1) {
+            if (stepValue == 1) {
+                mPlusButton.setText("+");
+                mMinusButton.setText("-");
+            }
+            else {
                 mPlusButton.setText("+" + stepValue);
                 mMinusButton.setText("-" + stepValue);
             }

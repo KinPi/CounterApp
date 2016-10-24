@@ -62,7 +62,6 @@ public class DatabaseHelper {
             String name = result.getString(1);
             int count = result.getInt(2);
             int step = result.getInt(3);
-            Log.d("DB: ", "id: " + id + "   Name: " + name + "     Steps: " + count);
             counterList.add(new Counter(id, name, count, step));
         }
         result.close();
