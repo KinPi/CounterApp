@@ -33,26 +33,29 @@ public class NewCounterItemActivity extends AppCompatActivity {
         newCounterItemSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (newCounterItemNameEditText.getText().length() == 0) {
+                String name = newCounterItemNameEditText.getText().toString().trim();
+                String countString = newCounterItemCountEditText.getText().toString().trim();
+                String stepString = newCounterItemStepEditText.getText().toString().trim();
+
+                if (name.length() == 0) {
                     Toast.makeText(NewCounterItemActivity.this, "Please enter a name!", Toast.LENGTH_SHORT).show();
                 }
 
-                else if (newCounterItemCountEditText.getText().length() == 0) {
+                else if (countString.length() == 0) {
                     Toast.makeText(NewCounterItemActivity.this, "Please enter a count value!", Toast.LENGTH_SHORT).show();
                 }
 
-                else if (newCounterItemStepEditText.getText().length() == 0) {
+                else if (stepString.length() == 0) {
                     Toast.makeText(NewCounterItemActivity.this, "Please enter a step value!", Toast.LENGTH_SHORT).show();
                 }
 
-                else if (Integer.parseInt(newCounterItemStepEditText.getText().toString()) <= 0) {
+                else if (Integer.parseInt(stepString) <= 0) {
                     Toast.makeText(NewCounterItemActivity.this, "Please enter a positive integer for step!", Toast.LENGTH_SHORT).show();
                 }
 
                 else {
-                    String name = newCounterItemNameEditText.getText().toString();
-                    int count = Integer.parseInt(newCounterItemCountEditText.getText().toString());
-                    int step = Integer.parseInt(newCounterItemStepEditText.getText().toString());
+                    int count = Integer.parseInt(countString.trim());
+                    int step = Integer.parseInt(stepString);
 
                     Counter counter = new Counter(name, count, step);
                     DatabaseHelper db = DatabaseHelper.getDatabaseHelper(getApplicationContext());
