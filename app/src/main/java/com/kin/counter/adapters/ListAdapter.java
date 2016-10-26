@@ -1,7 +1,6 @@
 package com.kin.counter.adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +8,22 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.kin.counter.R;
-import com.kin.counter.activities.CounterListActivity;
+import com.kin.counter.activities.AllCounterListActivity;
+import com.kin.counter.userDao.Counter;
+
+import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter {
+    private List<Counter> mCounterList;
+
+    public ListAdapter (List<Counter> counterList) {
+        super();
+        mCounterList = counterList;
+    }
+
+    public void setCounterList (List<Counter> counterList) {
+        mCounterList = counterList;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -26,7 +38,7 @@ public class ListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return CounterListActivity.counterList.size();
+        return mCounterList.size();
     }
 
     private class ListViewHolder extends RecyclerView.ViewHolder {
@@ -44,10 +56,10 @@ public class ListAdapter extends RecyclerView.Adapter {
         }
 
         public void bindView (final int position) {
-            mItemNameTextView.setText(CounterListActivity.counterList.get(position).name);
-            mItemCountTextView.setText(CounterListActivity.counterList.get(position).count + "");
+            mItemNameTextView.setText(mCounterList.get(position).name);
+            mItemCountTextView.setText(mCounterList.get(position).count + "");
 
-            final int stepValue = CounterListActivity.counterList.get(position).step;
+            final int stepValue = mCounterList.get(position).step;
             if (stepValue == 1) {
                 mPlusButton.setText("+");
                 mMinusButton.setText("-");
@@ -60,20 +72,20 @@ public class ListAdapter extends RecyclerView.Adapter {
             mPlusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CounterListActivity.counterList.get(position).count += stepValue;
-                    CounterListActivity.db.update(CounterListActivity.counterList.get(position));
-                    mItemCountTextView.setText(CounterListActivity.counterList.get(position).count + "");
+                    mCounterList.get(position).count += stepValue;
+                    AllCounterListActivity.db.update(mCounterList.get(position));
+                    mItemCountTextView.setText(mCounterList.get(position).count + "");
                 }
             });
             mMinusButton.setOnClickListener(new View.OnClickListener(){
 
                 @Override
                 public void onClick(View v) {
-                    int newValue = CounterListActivity.counterList.get(position).count - stepValue;
+                    int newValue = mCounterList.get(position).count - stepValue;
                     if (newValue >= 0) {
-                        CounterListActivity.counterList.get(position).count = newValue;
-                        CounterListActivity.db.update(CounterListActivity.counterList.get(position));
-                        mItemCountTextView.setText(CounterListActivity.counterList.get(position).count + "");
+                        mCounterList.get(position).count = newValue;
+                        AllCounterListActivity.db.update(mCounterList.get(position));
+                        mItemCountTextView.setText(mCounterList.get(position).count + "");
                     }
                 }
             });

@@ -52,6 +52,35 @@ public class DatabaseHelper {
 
     }
 
+    public List<Counter> queryForNameSearch (String namePattern) {
+        namePattern = namePattern.toLowerCase();
+        SQLiteDatabase db = mMySQLiteOpenHelper.getReadableDatabase();
+        Cursor result = db.query(mMySQLiteOpenHelper.TABLE,
+                                null,
+                                MySQLiteOpenHelper.NAME + " LIKE " + "'%" + namePattern + "%'",
+                                null,
+                                null,
+                                null,
+                                mMySQLiteOpenHelper.ID);
+
+        List<Counter> counterList = new ArrayList<>(20);
+        while (result.moveToNext()) {
+            int id = result.getInt(0);
+            String name = result.getString(1);
+            int count = result.getInt(2);
+            int step = result.getInt(3);
+            counterList.add(new Counter(id, name, count, step));
+        }
+        result.close();
+        db.close();
+
+        for (Counter counter : counterList) {
+            Log.d("TAG", "Name: " + counter.name);
+        }
+
+        return counterList;
+    }
+
     public List<Counter> queryForAllCounters() {
         SQLiteDatabase db = mMySQLiteOpenHelper.getReadableDatabase();
         Cursor result = db.query(mMySQLiteOpenHelper.TABLE, null, null, null, null, null, mMySQLiteOpenHelper.ID);
