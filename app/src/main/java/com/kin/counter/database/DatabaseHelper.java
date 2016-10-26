@@ -4,9 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
+import com.kin.counter.Settings;
 import com.kin.counter.userDao.Counter;
 
 import java.util.ArrayList;
@@ -27,43 +26,15 @@ public class DatabaseHelper {
         return mDatabaseHelper;
     }
 
-    class MySQLiteOpenHelper extends SQLiteOpenHelper {
-        private static final String DATABASE_NAME = "counter.db";
-        private static final int SCHEMA = 1;
-        public static final String NAME = "name";
-        public static final String ID = "id";
-        public static final String COUNT = "count";
-        public static final String STEP = "step";
-        public static final String TABLE = "counter";
-
-        public MySQLiteOpenHelper(Context context) {
-            super(context, DATABASE_NAME, null, SCHEMA);
+    public List<Counter> performCounterQuery (String namePattern) {
+        String selection = null;
+        if (namePattern != null) {
+            selection = MySQLiteOpenHelper.NAME + " LIKE " + "'%" + namePattern.toLowerCase() + "%'";
         }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE counter (id INTEGER PRIMARY KEY, name TEXT, count INTEGER, step INTEGER);");
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            throw new RuntimeException("No upgrade!");
-        }
-
-    }
-
-    public List<Counter> queryForNameSearch (String namePattern) {
-        namePattern = namePattern.toLowerCase();
         SQLiteDatabase db = mMySQLiteOpenHelper.getReadableDatabase();
-        Cursor result = db.query(mMySQLiteOpenHelper.TABLE,
-                                null,
-                                MySQLiteOpenHelper.NAME + " LIKE " + "'%" + namePattern + "%'",
-                                null,
-                                null,
-                                null,
-                                mMySQLiteOpenHelper.ID);
+        Cursor result = db.query(mMySQLiteOpenHelper.TABLE, null, selection, null, null, null, Settings.CURRENT_ORDER_BY_CONFIG);
+        List<Counter> counterList = new ArrayList<>();
 
-        List<Counter> counterList = new ArrayList<>(20);
         while (result.moveToNext()) {
             int id = result.getInt(0);
             String name = result.getString(1);
@@ -74,29 +45,15 @@ public class DatabaseHelper {
         result.close();
         db.close();
 
-        for (Counter counter : counterList) {
-            Log.d("TAG", "Name: " + counter.name);
-        }
-
         return counterList;
+    }
+
+    public List<Counter> queryForNameSearch (String namePattern) {
+        return performCounterQuery(namePattern);
     }
 
     public List<Counter> queryForAllCounters() {
-        SQLiteDatabase db = mMySQLiteOpenHelper.getReadableDatabase();
-        Cursor result = db.query(mMySQLiteOpenHelper.TABLE, null, null, null, null, null, mMySQLiteOpenHelper.ID);
-        List<Counter> counterList = new ArrayList<>(20);
-
-        while (result.moveToNext()) {
-            int id = result.getInt(0);
-            String name = result.getString(1);
-            int count = result.getInt(2);
-            int step = result.getInt(3);
-            counterList.add(new Counter(id, name, count, step));
-        }
-        result.close();
-        db.close();
-
-        return counterList;
+        return performCounterQuery(null);
     }
 
     public int update (Counter counter) {

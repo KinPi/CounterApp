@@ -35,7 +35,7 @@ public class AllCounterListActivity extends CounterListActivity {
                 long id = data.getLongExtra("Id", -1);
                 if (id != -1) {
                     refreshCounterList();
-                    recyclerView.scrollToPosition(((int) id) - 1);
+                    recyclerView.scrollToPosition(getPositionGivenID((int) id));
                 }
             }
         }
@@ -43,6 +43,15 @@ public class AllCounterListActivity extends CounterListActivity {
         else if (requestCode == NAME_SEARCH_REQUEST) {
             refreshCounterList();
         }
+    }
+
+    private int getPositionGivenID (int id) {
+        for (int i = 0; i < counterList.size(); i++) {
+            if (counterList.get(i).id == id) {
+                return i;
+            }
+        }
+        return 1;
     }
 
     @Override
