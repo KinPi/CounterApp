@@ -3,8 +3,12 @@ package com.kin.counter.activities;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kin.counter.R;
+import com.kin.counter.Settings;
 import com.kin.counter.adapters.ListAdapter;
 import com.kin.counter.database.DatabaseHelper;
 import com.kin.counter.userDao.Counter;
@@ -19,7 +24,7 @@ import com.kin.counter.userDao.Counter;
 import java.util.List;
 
 
-public abstract class CounterListActivity extends AppCompatActivity {
+public abstract class CounterListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final int NEW_COUNTER_ITEM_REQUEST = 1;
     public static final int NAME_SEARCH_REQUEST = 2;
     public static final String SEARCH_STRING = "searchString";
@@ -28,12 +33,16 @@ public abstract class CounterListActivity extends AppCompatActivity {
     protected List<Counter> counterList;
     protected ListAdapter listAdapter;
     protected RecyclerView recyclerView;
+    protected NavigationView navigationView;
     protected String searchString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counter_list);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(getOrderByIndex()).setChecked(true);
     }
 
     protected abstract void refreshCounterList ();
@@ -105,5 +114,47 @@ public abstract class CounterListActivity extends AppCompatActivity {
         });
 
         return dialog;
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.earliest) {
+            Log.d("TAG", "Pressed the camera!");
+            Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_EARLIEST;
+        } else if (id == R.id.latest) {
+            Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_LATEST;
+        } else if (id == R.id.alphabetical) {
+            Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_NAME_ASC;
+        } else if (id == R.id.reverseAlphabetical) {
+            Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_NAME_DESC;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        refreshCounterList();
+        return true;
+    }
+
+    protected int getOrderByIndex () {
+        int index = -1;
+        switch (Settings.CURRENT_ORDER_BY_CONFIG) {
+            case Settings.ORDER_BY_EARLIEST:
+                index = 0;
+                break;
+            case Settings.ORDER_BY_LATEST:
+                index = 1;
+                break;
+            case Settings.ORDER_BY_NAME_ASC:
+                index = 2;
+                break;
+            case Settings.ORDER_BY_NAME_DESC:
+                index = 3;
+                break;
+        }
+        return index;
     }
 }

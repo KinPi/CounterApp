@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/earliest"
+            android:title="Earliest"/>
+        <item
+            android:id="@+id/latest"
+            android:title="Latest"/>
+        <item
+            android:id="@+id/alphabetical"
+            android:title="Alphabetical"/>
+        <item
+            android:id="@+id/reverseAlphabetical"
+            android:title="Reverse-Alphabetical"/>
+    </group>
+</menu>

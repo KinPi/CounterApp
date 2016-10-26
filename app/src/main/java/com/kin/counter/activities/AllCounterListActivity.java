@@ -42,6 +42,7 @@ public class AllCounterListActivity extends CounterListActivity {
 
         else if (requestCode == NAME_SEARCH_REQUEST) {
             refreshCounterList();
+            navigationView.getMenu().getItem(getOrderByIndex()).setChecked(true);
         }
     }
 
