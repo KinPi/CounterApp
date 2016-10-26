@@ -15,7 +15,7 @@ public class NameSearchActivity extends CounterListActivity {
         super.onCreate(savedInstanceState);
 
         db = DatabaseHelper.getDatabaseHelper(getApplicationContext());
-        String searchString = getIntent().getStringExtra(SEARCH_STRING);
+        searchString = getIntent().getStringExtra(SEARCH_STRING);
         setTitle("Search Result For:   \"" + searchString + "\"");
         counterList = db.queryForNameSearch(searchString);
 
@@ -25,6 +25,13 @@ public class NameSearchActivity extends CounterListActivity {
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+    }
+
+    @Override
+    protected void refreshCounterList () {
+        counterList = db.queryForNameSearch(searchString);
+        listAdapter.setCounterList(counterList);
+        listAdapter.notifyDataSetChanged();
     }
 
 
