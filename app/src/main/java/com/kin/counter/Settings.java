@@ -13,6 +13,7 @@ public class Settings {
 
     /************************ CURRENT CONFIGURATION *************************************/
     public static String CURRENT_ORDER_BY_CONFIG = ORDER_BY_EARLIEST;
+    public static boolean DEBUG_MODE = true;
     /************************************************************************************/
 
 }

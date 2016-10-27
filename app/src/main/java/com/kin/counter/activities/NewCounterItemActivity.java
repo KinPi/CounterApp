@@ -37,8 +37,8 @@ public class NewCounterItemActivity extends AppCompatActivity {
                 String countString = newCounterItemCountEditText.getText().toString().trim();
                 String stepString = newCounterItemStepEditText.getText().toString().trim();
 
-                if (name.length() == 0) {
-                    Toast.makeText(NewCounterItemActivity.this, "Please enter a name!", Toast.LENGTH_SHORT).show();
+                if (name.length() == 0 || name.length() > 15) {
+                    Toast.makeText(NewCounterItemActivity.this, "Please enter a name that's between 1 to 15 characters!", Toast.LENGTH_SHORT).show();
                 }
 
                 else if (countString.length() == 0) {
