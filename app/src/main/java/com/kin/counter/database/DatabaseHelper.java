@@ -80,4 +80,12 @@ public class DatabaseHelper {
         db.close();
         return id;
     }
+
+    public int delete (Counter counter) {
+        SQLiteDatabase db = mMySQLiteOpenHelper.getWritableDatabase();
+        if (db == null) {
+            return 0;
+        }
+        return db.delete(MySQLiteOpenHelper.TABLE, MySQLiteOpenHelper.ID + "=?", new String[] {Integer.toString(counter.id)});
+    }
 }

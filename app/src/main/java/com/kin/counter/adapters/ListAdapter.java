@@ -1,5 +1,9 @@
 package com.kin.counter.adapters;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,15 +13,19 @@ import android.widget.TextView;
 
 import com.kin.counter.R;
 import com.kin.counter.activities.AllCounterListActivity;
+import com.kin.counter.activities.CounterItemActivity;
+import com.kin.counter.activities.CounterListActivity;
 import com.kin.counter.userDao.Counter;
 
 import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter {
     private List<Counter> mCounterList;
+    private Context mContext;
 
-    public ListAdapter (List<Counter> counterList) {
+    public ListAdapter (Context context, List<Counter> counterList) {
         super();
+        mContext = context;
         mCounterList = counterList;
     }
 
@@ -57,6 +65,15 @@ public class ListAdapter extends RecyclerView.Adapter {
 
         public void bindView (final int position) {
             mItemNameTextView.setText(mCounterList.get(position).name);
+            mItemNameTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, CounterItemActivity.class);
+                    intent.putExtra("Counter", mCounterList.get(position));
+                    ((AppCompatActivity) mContext).startActivityForResult(intent, CounterListActivity.COUNTER_ITEM_REQUEST);
+                }
+            });
+
             mItemCountTextView.setText(mCounterList.get(position).count + "");
 
             final int stepValue = mCounterList.get(position).step;

@@ -1,6 +1,8 @@
 package com.kin.counter.userDao;
 
-public class Counter {
+import java.io.Serializable;
+
+public class Counter implements Serializable {
     public int id;
     public String name;
     public int count;

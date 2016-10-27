@@ -27,6 +27,7 @@ import java.util.List;
 public abstract class CounterListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final int NEW_COUNTER_ITEM_REQUEST = 1;
     public static final int NAME_SEARCH_REQUEST = 2;
+    public static final int COUNTER_ITEM_REQUEST = 3;
     public static final String SEARCH_STRING = "searchString";
 
     public static DatabaseHelper db;
@@ -75,7 +76,7 @@ public abstract class CounterListActivity extends AppCompatActivity implements N
     }
 
     protected AlertDialog createAlertDialog() {
-        View alertLayout = getLayoutInflater().inflate(R.layout.search_alert_dialog, null);
+        View alertLayout = getLayoutInflater().inflate(R.layout.alert_dialog_search, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Search");
         builder.setView(alertLayout);
@@ -156,5 +157,38 @@ public abstract class CounterListActivity extends AppCompatActivity implements N
                 break;
         }
         return index;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == NEW_COUNTER_ITEM_REQUEST) {
+
+            if (resultCode == RESULT_OK) {
+                long id = data.getLongExtra("Id", -1);
+                if (id != -1) {
+                    refreshCounterList();
+                    recyclerView.scrollToPosition(getPositionGivenID((int) id));
+                }
+            }
+        }
+
+        else if (requestCode == NAME_SEARCH_REQUEST) {
+            refreshCounterList();
+            navigationView.getMenu().getItem(getOrderByIndex()).setChecked(true);
+        }
+
+        else if (requestCode == COUNTER_ITEM_REQUEST) {
+            refreshCounterList();
+        }
+    }
+
+    protected int getPositionGivenID (int id) {
+        for (int i = 0; i < counterList.size(); i++) {
+            if (counterList.get(i).id == id) {
+                return i;
+            }
+        }
+        return 1;
     }
 }

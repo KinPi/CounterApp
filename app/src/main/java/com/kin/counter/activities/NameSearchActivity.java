@@ -16,11 +16,11 @@ public class NameSearchActivity extends CounterListActivity {
 
         db = DatabaseHelper.getDatabaseHelper(getApplicationContext());
         searchString = getIntent().getStringExtra(SEARCH_STRING);
-        setTitle("Search Result For:   \"" + searchString + "\"");
+        setTitle("Searching:   \"" + searchString + "\"");
         counterList = db.queryForNameSearch(searchString);
 
         recyclerView = (RecyclerView) findViewById(R.id.listRecyclerView);
-        listAdapter = new ListAdapter(counterList);
+        listAdapter = new ListAdapter(this, counterList);
         recyclerView.setAdapter(listAdapter);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

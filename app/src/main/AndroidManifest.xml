@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.AllCounterListActivity"
+        <activity
+            android:name=".activities.AllCounterListActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -16,15 +17,16 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.NewCounterItemActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.NameSearchActivity"
             android:screenOrientation="portrait">
         </activity>
-
-        <activity android:name=".activities.NameSearchActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".activities.CounterItemActivity">
         </activity>
     </application>
 
