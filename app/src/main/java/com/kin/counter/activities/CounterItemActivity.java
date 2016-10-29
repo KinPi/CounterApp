@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kin.counter.R;
 import com.kin.counter.database.DatabaseHelper;
@@ -84,6 +85,7 @@ public class CounterItemActivity extends AppCompatActivity {
                 break;
 
             case R.id.editActionItem:
+                createEditCounterAlertDialog().show();
                 break;
 
             case R.id.deleteActionItem:
@@ -91,6 +93,69 @@ public class CounterItemActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    private AlertDialog createEditCounterAlertDialog() {
+        View alertLayout = getLayoutInflater().inflate(R.layout.alert_dialog_edit, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Edit");
+        builder.setView(alertLayout);
+
+        final EditText nameEditText = (EditText) alertLayout.findViewById(R.id.editItemNameEditText);
+        final EditText countEditText = (EditText) alertLayout.findViewById(R.id.editItemCountEditText);
+        final EditText stepEditText = (EditText) alertLayout.findViewById(R.id.editItemStepEditText);
+        TextView confirmTextView = (TextView) alertLayout.findViewById(R.id.editConfirmDialogTextView);
+        TextView cancelTextView = (TextView) alertLayout.findViewById(R.id.editCancelDialogTextView);
+
+        nameEditText.setText(mCounter.name);
+        nameEditText.setSelection(mCounter.name.length());
+        countEditText.setText(mCounter.count + "");
+        stepEditText.setText(mCounter.step + "");
+        final AlertDialog dialog = builder.create();
+
+        confirmTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = nameEditText.getText().toString().trim();
+                String countString = countEditText.getText().toString().trim();
+                String stepString = stepEditText.getText().toString().trim();
+
+                if (name.length() == 0 || name.length() > 15) {
+                    Toast.makeText(CounterItemActivity.this, "Please enter a name that's between 1 to 15 characters!", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (countString.length() == 0) {
+                    Toast.makeText(CounterItemActivity.this, "Please enter a count value!", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (stepString.length() == 0) {
+                    Toast.makeText(CounterItemActivity.this, "Please enter a step value!", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (Integer.parseInt(stepString) <= 0) {
+                    Toast.makeText(CounterItemActivity.this, "Please enter a positive integer for step!", Toast.LENGTH_SHORT).show();
+                }
+
+                else {
+                    mCounter.name = name;
+                    mCounter.count = Integer.parseInt(countString);
+                    mCounter.step = Integer.parseInt(stepString);
+                    dialog.dismiss();
+                    setTitle(name);
+                    mCounterItemCountTextView.setText(countString);
+                    DatabaseHelper.getDatabaseHelper(getApplicationContext()).update(mCounter);
+                }
+            }
+        });
+
+        cancelTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        return dialog;
     }
 
     private AlertDialog createDeleteCounterAlertDialog() {

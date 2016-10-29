@@ -4,15 +4,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/earliest"
-            android:title="Earliest"/>
+            android:title="Oldest"/>
         <item
             android:id="@+id/latest"
-            android:title="Latest"/>
+            android:title="Newest"/>
         <item
             android:id="@+id/alphabetical"
-            android:title="Alphabetical"/>
+            android:title="A - Z"/>
         <item
             android:id="@+id/reverseAlphabetical"
-            android:title="Reverse-Alphabetical"/>
+            android:title="Z - A"/>
     </group>
 </menu>
