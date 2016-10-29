@@ -25,35 +25,6 @@ public class AllCounterListActivity extends CounterListActivity {
         recyclerView.setLayoutManager(layoutManager);
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//
-//        if (requestCode == NEW_COUNTER_ITEM_REQUEST) {
-//
-//            if (resultCode == RESULT_OK) {
-//                long id = data.getLongExtra("Id", -1);
-//                if (id != -1) {
-//                    refreshCounterList();
-//                    recyclerView.scrollToPosition(getPositionGivenID((int) id));
-//                }
-//            }
-//        }
-//
-//        else if (requestCode == NAME_SEARCH_REQUEST) {
-//            refreshCounterList();
-//            navigationView.getMenu().getItem(getOrderByIndex()).setChecked(true);
-//        }
-//    }
-//
-//    private int getPositionGivenID (int id) {
-//        for (int i = 0; i < counterList.size(); i++) {
-//            if (counterList.get(i).id == id) {
-//                return i;
-//            }
-//        }
-//        return 1;
-//    }
-
     @Override
     protected void refreshCounterList () {
         counterList = db.queryForAllCounters();

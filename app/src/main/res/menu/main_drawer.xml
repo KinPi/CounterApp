@@ -3,10 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/earliest"
+            android:id="@+id/oldest"
             android:title="Oldest"/>
         <item
-            android:id="@+id/latest"
+            android:id="@+id/newest"
             android:title="Newest"/>
         <item
             android:id="@+id/alphabetical"
@@ -14,5 +14,21 @@
         <item
             android:id="@+id/reverseAlphabetical"
             android:title="Z - A"/>
+
+        <item
+            android:id="@+id/lowestCount"
+            android:title="Lowest Count"/>
+
+        <item
+            android:id="@+id/highestCount"
+            android:title="Highest Count"/>
+
+        <item
+            android:id="@+id/lowestIncrement"
+            android:title="Lowest Increment"/>
+
+        <item
+            android:id="@+id/highestIncrement"
+            android:title="Highest Increment"/>
     </group>
 </menu>

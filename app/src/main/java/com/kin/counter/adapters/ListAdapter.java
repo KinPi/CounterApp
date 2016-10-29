@@ -1,6 +1,5 @@
 package com.kin.counter.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -76,20 +75,20 @@ public class ListAdapter extends RecyclerView.Adapter {
 
             mItemCountTextView.setText(mCounterList.get(position).count + "");
 
-            final int stepValue = mCounterList.get(position).step;
-            if (stepValue == 1) {
+            final int incrementValue = mCounterList.get(position).increment;
+            if (incrementValue == 1) {
                 mPlusButton.setText("+");
                 mMinusButton.setText("-");
             }
             else {
-                mPlusButton.setText("+" + stepValue);
-                mMinusButton.setText("-" + stepValue);
+                mPlusButton.setText("+" + incrementValue);
+                mMinusButton.setText("-" + incrementValue);
             }
 
             mPlusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mCounterList.get(position).count += stepValue;
+                    mCounterList.get(position).count += incrementValue;
                     AllCounterListActivity.db.update(mCounterList.get(position));
                     mItemCountTextView.setText(mCounterList.get(position).count + "");
                 }
@@ -98,7 +97,7 @@ public class ListAdapter extends RecyclerView.Adapter {
 
                 @Override
                 public void onClick(View v) {
-                    int newValue = mCounterList.get(position).count - stepValue;
+                    int newValue = mCounterList.get(position).count - incrementValue;
                     if (newValue >= 0) {
                         mCounterList.get(position).count = newValue;
                         AllCounterListActivity.db.update(mCounterList.get(position));

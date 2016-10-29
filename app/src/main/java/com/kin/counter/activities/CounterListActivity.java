@@ -120,18 +120,25 @@ public abstract class CounterListActivity extends AppCompatActivity implements N
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.earliest) {
+        if (id == R.id.oldest) {
             Log.d("TAG", "Pressed the camera!");
-            Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_EARLIEST;
-        } else if (id == R.id.latest) {
-            Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_LATEST;
+            Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_NEWEST;
+        } else if (id == R.id.newest) {
+            Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_OLDEST;
         } else if (id == R.id.alphabetical) {
             Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_NAME_ASC;
         } else if (id == R.id.reverseAlphabetical) {
             Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_NAME_DESC;
+        } else if (id == R.id.lowestCount) {
+            Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_COUNT_ASC;
+        } else if (id == R.id.highestCount) {
+            Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_COUNT_DESC;
+        } else if (id == R.id.lowestIncrement) {
+            Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_INCREMENT_ASC;
+        } else if (id == R.id.highestIncrement) {
+            Settings.CURRENT_ORDER_BY_CONFIG = Settings.ORDER_BY_INCREMENT_DESC;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -143,10 +150,10 @@ public abstract class CounterListActivity extends AppCompatActivity implements N
     protected int getOrderByIndex () {
         int index = -1;
         switch (Settings.CURRENT_ORDER_BY_CONFIG) {
-            case Settings.ORDER_BY_EARLIEST:
+            case Settings.ORDER_BY_NEWEST:
                 index = 0;
                 break;
-            case Settings.ORDER_BY_LATEST:
+            case Settings.ORDER_BY_OLDEST:
                 index = 1;
                 break;
             case Settings.ORDER_BY_NAME_ASC:
@@ -154,6 +161,18 @@ public abstract class CounterListActivity extends AppCompatActivity implements N
                 break;
             case Settings.ORDER_BY_NAME_DESC:
                 index = 3;
+                break;
+            case Settings.ORDER_BY_COUNT_ASC:
+                index = 4;
+                break;
+            case Settings.ORDER_BY_COUNT_DESC:
+                index = 5;
+                break;
+            case Settings.ORDER_BY_INCREMENT_ASC:
+                index = 6;
+                break;
+            case Settings.ORDER_BY_INCREMENT_DESC:
+                index = 7;
                 break;
         }
         return index;

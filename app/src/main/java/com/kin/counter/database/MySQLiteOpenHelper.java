@@ -14,7 +14,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     public static final String NAME = "name";
     public static final String ID = "id";
     public static final String COUNT = "count";
-    public static final String STEP = "step";
+    public static final String INCREMENT = "increment";
     public static final String TABLE = "counter";
 
     public MySQLiteOpenHelper(Context context) {
@@ -23,79 +23,79 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE counter (id INTEGER PRIMARY KEY, name TEXT, count INTEGER, step INTEGER);");
+        db.execSQL("CREATE TABLE counter (id INTEGER PRIMARY KEY, name TEXT, count INTEGER, increment INTEGER);");
 
         if (Settings.DEBUG_MODE) {
             ContentValues cv = new ContentValues();
 
             cv.put(NAME, "Apples");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Bananas");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Pumpkins");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Pears");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Oranges");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Watermelons");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Grapes");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Squashes");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Carrots");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Peaches");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Lemons");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Strawberries");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Cabbages");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
 
             cv.put(NAME, "Tomatoes");
             cv.put(COUNT, 0);
-            cv.put(STEP, 1);
+            cv.put(INCREMENT, 1);
             db.insert(TABLE, NAME, cv);
         }
     }

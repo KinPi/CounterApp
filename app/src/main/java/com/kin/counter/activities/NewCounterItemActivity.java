@@ -15,7 +15,7 @@ import com.kin.counter.userDao.Counter;
 public class NewCounterItemActivity extends AppCompatActivity {
     private EditText newCounterItemNameEditText;
     private EditText newCounterItemCountEditText;
-    private EditText newCounterItemStepEditText;
+    private EditText newCounterItemIncrementEditText;
     private Button newCounterItemSaveButton;
     private Button newCounterItemCancelButton;
 
@@ -26,7 +26,7 @@ public class NewCounterItemActivity extends AppCompatActivity {
 
         newCounterItemNameEditText = (EditText) findViewById(R.id.newCounterItemNameTextEdit);
         newCounterItemCountEditText = (EditText) findViewById(R.id.newCounterItemCountTextEdit);
-        newCounterItemStepEditText = (EditText) findViewById(R.id.newCounterItemStepEditText);
+        newCounterItemIncrementEditText = (EditText) findViewById(R.id.newCounterItemIncrementEditText);
         newCounterItemSaveButton = (Button) findViewById(R.id.newCounterItemSaveButton);
         newCounterItemCancelButton = (Button) findViewById(R.id.newCounterItemCancelButton);
 
@@ -35,7 +35,7 @@ public class NewCounterItemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = newCounterItemNameEditText.getText().toString().trim();
                 String countString = newCounterItemCountEditText.getText().toString().trim();
-                String stepString = newCounterItemStepEditText.getText().toString().trim();
+                String incrementString = newCounterItemIncrementEditText.getText().toString().trim();
 
                 if (name.length() == 0 || name.length() > 15) {
                     Toast.makeText(NewCounterItemActivity.this, "Please enter a name that's between 1 to 15 characters!", Toast.LENGTH_SHORT).show();
@@ -45,19 +45,19 @@ public class NewCounterItemActivity extends AppCompatActivity {
                     Toast.makeText(NewCounterItemActivity.this, "Please enter a count value!", Toast.LENGTH_SHORT).show();
                 }
 
-                else if (stepString.length() == 0) {
-                    Toast.makeText(NewCounterItemActivity.this, "Please enter a step value!", Toast.LENGTH_SHORT).show();
+                else if (incrementString.length() == 0) {
+                    Toast.makeText(NewCounterItemActivity.this, "Please enter a increment value!", Toast.LENGTH_SHORT).show();
                 }
 
-                else if (Integer.parseInt(stepString) <= 0) {
-                    Toast.makeText(NewCounterItemActivity.this, "Please enter a positive integer for step!", Toast.LENGTH_SHORT).show();
+                else if (Integer.parseInt(incrementString) <= 0) {
+                    Toast.makeText(NewCounterItemActivity.this, "Please enter a positive integer for increment!", Toast.LENGTH_SHORT).show();
                 }
 
                 else {
                     int count = Integer.parseInt(countString.trim());
-                    int step = Integer.parseInt(stepString);
+                    int increment = Integer.parseInt(incrementString);
 
-                    Counter counter = new Counter(name, count, step);
+                    Counter counter = new Counter(name, count, increment);
                     DatabaseHelper db = DatabaseHelper.getDatabaseHelper(getApplicationContext());
                     long result = db.add(counter);
                     Intent intent = new Intent();

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,8 +18,8 @@ import com.kin.counter.userDao.Counter;
 public class CounterItemActivity extends AppCompatActivity {
     private Counter mCounter;
     private int plusOrMinusOne;
-    private MenuItem plusStep;
-    private MenuItem minusStep;
+    private MenuItem plusIncrement;
+    private MenuItem minusIncrement;
     private TextView mCounterItemCountTextView;
 
     @Override
@@ -31,7 +30,6 @@ public class CounterItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mCounter = (Counter) intent.getSerializableExtra("Counter");
         setTitle(mCounter.name);
-        Log.d("TAG", "ID: " + mCounter.id + " Name " + mCounter.name + " Count: " + mCounter.count + " Step: " + mCounter.step);
         plusOrMinusOne = 1;
 
         mCounterItemCountTextView = (TextView) findViewById(R.id.counterItemCountTextView);
@@ -39,7 +37,7 @@ public class CounterItemActivity extends AppCompatActivity {
         mCounterItemCountTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int newVal = mCounter.count + plusOrMinusOne * mCounter.step;
+                int newVal = mCounter.count + plusOrMinusOne * mCounter.increment;
                 if (newVal < 0) {
                     return;
                 }
@@ -56,15 +54,15 @@ public class CounterItemActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_counter_item, menu);
-        plusStep = menu.findItem(R.id.plusStepActionItem);
-        minusStep = menu.findItem(R.id.minusStepActionItem);
+        plusIncrement = menu.findItem(R.id.plusIncrementActionItem);
+        minusIncrement = menu.findItem(R.id.minusDecrementActionItem);
         if (plusOrMinusOne == 1) {
-            plusStep.setVisible(true);
-            minusStep.setVisible(false);
+            plusIncrement.setVisible(true);
+            minusIncrement.setVisible(false);
         }
         else {
-            plusStep.setVisible(false);
-            minusStep.setVisible(true);
+            plusIncrement.setVisible(false);
+            minusIncrement.setVisible(true);
         }
         return true;
     }
@@ -72,16 +70,16 @@ public class CounterItemActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.plusStepActionItem:
+            case R.id.plusIncrementActionItem:
                 plusOrMinusOne = -1;
-                plusStep.setVisible(false);
-                minusStep.setVisible(true);
+                plusIncrement.setVisible(false);
+                minusIncrement.setVisible(true);
                 break;
 
-            case R.id.minusStepActionItem:
+            case R.id.minusDecrementActionItem:
                 plusOrMinusOne = 1;
-                plusStep.setVisible(true);
-                minusStep.setVisible(false);
+                plusIncrement.setVisible(true);
+                minusIncrement.setVisible(false);
                 break;
 
             case R.id.editActionItem:
@@ -103,14 +101,14 @@ public class CounterItemActivity extends AppCompatActivity {
 
         final EditText nameEditText = (EditText) alertLayout.findViewById(R.id.editItemNameEditText);
         final EditText countEditText = (EditText) alertLayout.findViewById(R.id.editItemCountEditText);
-        final EditText stepEditText = (EditText) alertLayout.findViewById(R.id.editItemStepEditText);
+        final EditText IncrementEditText = (EditText) alertLayout.findViewById(R.id.editItemIncrementEditText);
         TextView confirmTextView = (TextView) alertLayout.findViewById(R.id.editConfirmDialogTextView);
         TextView cancelTextView = (TextView) alertLayout.findViewById(R.id.editCancelDialogTextView);
 
         nameEditText.setText(mCounter.name);
         nameEditText.setSelection(mCounter.name.length());
         countEditText.setText(mCounter.count + "");
-        stepEditText.setText(mCounter.step + "");
+        IncrementEditText.setText(mCounter.increment + "");
         final AlertDialog dialog = builder.create();
 
         confirmTextView.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +116,7 @@ public class CounterItemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = nameEditText.getText().toString().trim();
                 String countString = countEditText.getText().toString().trim();
-                String stepString = stepEditText.getText().toString().trim();
+                String incrementString = IncrementEditText.getText().toString().trim();
 
                 if (name.length() == 0 || name.length() > 15) {
                     Toast.makeText(CounterItemActivity.this, "Please enter a name that's between 1 to 15 characters!", Toast.LENGTH_SHORT).show();
@@ -128,18 +126,18 @@ public class CounterItemActivity extends AppCompatActivity {
                     Toast.makeText(CounterItemActivity.this, "Please enter a count value!", Toast.LENGTH_SHORT).show();
                 }
 
-                else if (stepString.length() == 0) {
-                    Toast.makeText(CounterItemActivity.this, "Please enter a step value!", Toast.LENGTH_SHORT).show();
+                else if (incrementString.length() == 0) {
+                    Toast.makeText(CounterItemActivity.this, "Please enter a increment value!", Toast.LENGTH_SHORT).show();
                 }
 
-                else if (Integer.parseInt(stepString) <= 0) {
-                    Toast.makeText(CounterItemActivity.this, "Please enter a positive integer for step!", Toast.LENGTH_SHORT).show();
+                else if (Integer.parseInt(incrementString) <= 0) {
+                    Toast.makeText(CounterItemActivity.this, "Please enter a positive integer for increment!", Toast.LENGTH_SHORT).show();
                 }
 
                 else {
                     mCounter.name = name;
                     mCounter.count = Integer.parseInt(countString);
-                    mCounter.step = Integer.parseInt(stepString);
+                    mCounter.increment = Integer.parseInt(incrementString);
                     dialog.dismiss();
                     setTitle(name);
                     mCounterItemCountTextView.setText(countString);

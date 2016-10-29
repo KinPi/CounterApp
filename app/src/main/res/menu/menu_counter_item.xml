@@ -3,15 +3,15 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/plusStepActionItem"
+        android:id="@+id/plusIncrementActionItem"
         android:icon="@drawable/ic_add_white_24dp"
-        android:title="@string/plusStepActionItem"
+        android:title="@string/plusIncrementActionItem"
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/minusStepActionItem"
+        android:id="@+id/minusDecrementActionItem"
         android:icon="@drawable/ic_remove_white_24dp"
-        android:title="@string/minusStepActionItem"
+        android:title="@string/minusDecrementActionItem"
         app:showAsAction="always"/>
 
     <item

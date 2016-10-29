@@ -4,6 +4,6 @@
     <string name="searchActionItem">Search</string>
     <string name="editActionItem">Edit</string>
     <string name="deleteActionItem">Delete</string>
-    <string name="plusStepActionItem">+</string>
-    <string name="minusStepActionItem">-</string>
+    <string name="plusIncrementActionItem">+</string>
+    <string name="minusDecrementActionItem">-</string>
 </resources>

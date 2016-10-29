@@ -39,8 +39,8 @@ public class DatabaseHelper {
             int id = result.getInt(0);
             String name = result.getString(1);
             int count = result.getInt(2);
-            int step = result.getInt(3);
-            counterList.add(new Counter(id, name, count, step));
+            int increment = result.getInt(3);
+            counterList.add(new Counter(id, name, count, increment));
         }
         result.close();
         db.close();
@@ -61,7 +61,7 @@ public class DatabaseHelper {
         ContentValues cv = new ContentValues();
         cv.put(mMySQLiteOpenHelper.NAME, counter.name);
         cv.put(mMySQLiteOpenHelper.COUNT, counter.count);
-        cv.put(mMySQLiteOpenHelper.STEP, counter.step);
+        cv.put(mMySQLiteOpenHelper.INCREMENT, counter.increment);
         int rowsAffected = db.update(mMySQLiteOpenHelper.TABLE, cv, "id = " + counter.id ,null);
         db.close();
         return rowsAffected;
@@ -75,7 +75,7 @@ public class DatabaseHelper {
         ContentValues cv = new ContentValues();
         cv.put(mMySQLiteOpenHelper.NAME, counter.name);
         cv.put(mMySQLiteOpenHelper.COUNT, counter.count);
-        cv.put(mMySQLiteOpenHelper.STEP, counter.step);
+        cv.put(mMySQLiteOpenHelper.INCREMENT, counter.increment);
         long id = db.insert(MySQLiteOpenHelper.TABLE, null, cv);
         db.close();
         return id;
