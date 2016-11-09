@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.kin.counter.CounterStringChecker;
 import com.kin.counter.R;
 import com.kin.counter.database.DatabaseHelper;
 import com.kin.counter.userDao.Counter;
@@ -37,23 +38,7 @@ public class NewCounterItemActivity extends AppCompatActivity {
                 String countString = newCounterItemCountEditText.getText().toString().trim();
                 String incrementString = newCounterItemIncrementEditText.getText().toString().trim();
 
-                if (name.length() == 0 || name.length() > 15) {
-                    Toast.makeText(NewCounterItemActivity.this, "Please enter a name that's between 1 to 15 characters!", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (countString.length() == 0) {
-                    Toast.makeText(NewCounterItemActivity.this, "Please enter a count value!", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (incrementString.length() == 0) {
-                    Toast.makeText(NewCounterItemActivity.this, "Please enter a increment value!", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (Integer.parseInt(incrementString) <= 0) {
-                    Toast.makeText(NewCounterItemActivity.this, "Please enter a positive integer for increment!", Toast.LENGTH_SHORT).show();
-                }
-
-                else {
+                if (CounterStringChecker.areStringsValid(NewCounterItemActivity.this, name, countString, incrementString)) {
                     int count = Integer.parseInt(countString.trim());
                     int increment = Integer.parseInt(incrementString);
 
